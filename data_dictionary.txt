@@ -1,0 +1,59 @@
+#### Fact Tables
+
+fact_immigration
+
+unique_id: long (Primary Key) Increases monotically
+ |-- arrival_date: date (foreign Key) Date of arrival.
+ |-- i94visa: double (foreign Key) Visa code associated with (Business, Pleasure, Student)
+ |-- i94port: string (foreign Key) Valid and invalid codes for ports.
+ |-- i94res: double  (foreign Key) Code for country of residency.
+ |-- gender_id: string (foreign Key) Character representing a gender label (Female, Male, Unknown, Third Gender)
+ |-- long_term: integer Calculated field (departure_date - arrival_date) to determine short or long stays for research purposes.
+ 
+ 
+fact_demographics
+demographics_id long (Primary Key) Increases monotically
+ |-- city_id: long (foreign Key) comprised of city and state_code
+ |-- Race: string Racial category consisting of possible values (Hispanic or Latino/Black/White/Asian etc).
+ |-- Count: long Aggregated value
+
+
+#### Dimension Tables
+dim_time
+
+arrival_date: date (Primary Key) Arrival date
+ |-- hour: integer hour of arrival date
+ |-- day: integer day of arrival date
+ |-- week: integer week of arrival date
+ |-- month: integer month of arrival date
+ |-- year: integer year of arrival date.
+ 
+ 
+dim_airport
+
+i94port: string (Primary Key) Valid or invalid code for port.
+ |-- city: string city
+ |-- state_code: string state_code
+
+
+dim_gender
+gender_id: string (Primary Key) Character representing a gender (F, M, U, X)
+ |-- gender: string Label representing the gender_id (female, male, unknown, third gender).
+ 
+ 
+dim_country_origin
+i94res: integer (Primary key) code representing a country of origin.
+ |-- country: string name of country of origin
+
+
+dim_city
+city_id: long (Primary Key) Compound key of unique city and state_code.
+ |-- city: string city name in all capitalized.
+ |-- state_code: string two character string representing the state.
+ |-- female_population: string (nullable = true)
+ |-- male_population: string (nullable = true)
+ 
+ 
+dim_visa
+i94visa: double (Primary Key) visa id representing (Business, Pleasure, Student)
+ |-- visa: string Label including (Business, Pleasure, Student)ew("fact_immigration")
